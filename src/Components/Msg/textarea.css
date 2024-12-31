@@ -1,0 +1,26 @@
+.Search-bar{
+    min-height: 3.5rem;
+    max-height: auto;
+    display: flex;
+    justify-content: space-around;
+    padding: 0.5rem 0;
+}
+
+.Search-bar textarea{
+    width: 80%;
+    padding: 0.25rem 0.5rem;
+    min-height: 2.5rem;
+    font-size: 1.2rem;
+}
+.Search-bar button{
+    display: block;
+    width: 15%;
+    padding: 0 !important;
+    height: 2.5rem;
+
+}
+form > textarea{
+    resize: none;
+    outline: 1px solid black;
+    
+}

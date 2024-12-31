@@ -1,0 +1,38 @@
+/* Main, contact, messages style start */
+
+main{
+    display: flex;
+    position: relative;
+}
+
+.contact--container{
+    flex: 1;
+}
+.message--container{
+    flex: 3;
+    
+} 
+
+ 
+/* Welcoming message style */
+.welcoming-msg{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 5rem;
+    height: 100%;
+    font-size: 1.5rem;
+    
+}
+.welcoming-msg h2{
+    margin-top: 6rem;
+
+}
+@media screen and (max-width: 992px) {
+    .contact--container{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: auto;
+    }
+}
