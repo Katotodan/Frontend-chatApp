@@ -34,7 +34,7 @@ export const Login = () =>{
         .catch((err) => {
             console.log(err);
             
-            setErrorMsg(err.response["data"])
+            setErrorMsg(err.response["data"] || err.message)
             setTimeout(() => {
                 setErrorMsg((prev) => null)
             }, 3000);
