@@ -26,6 +26,8 @@ export const Login = () =>{
             },
         })
         .then((res) => {
+            console.log(res);
+            
             setCurrentUser({...res.data})
             setRedictUser(true)
         })
