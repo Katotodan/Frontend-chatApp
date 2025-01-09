@@ -59,7 +59,7 @@ export const Login = () =>{
                 </div>
                 <form onSubmit={loginFunc}
                 >
-                    <div className="flex items-left flex-col mb-5 mx-8 ">
+                    <div className="flex items-left flex-col mb-5 mt-8 ">
                         <label htmlFor="username"  className="text-3xl">Username</label>
                         <input id="username" name="username" type="text" required 
                         className="block p-1 rounded-md" onChange={handleChange}/>
