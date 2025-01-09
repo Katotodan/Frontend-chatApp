@@ -52,14 +52,14 @@ export const Login = () =>{
         <section className="h-screen bg-slate-300 flex items-center justify-center">
             <div className=" md:w-2/4 md:h-3/4 border-2 border-black rounded-md form-container">
                 {redirectUser && <Navigate to="/"/>}
-                <h1 className="text-center text-5xl font-sans my-8">Log in to SOMA</h1>
+                <h1 className="text-center text-5xl font-sans mt-8">Log in to SOMA</h1>
             
                 <div className="h-6 ml-8 mb-2">
                     {errorMsg && <p className="text-red-600">{errorMsg}</p>}
                 </div>
                 <form onSubmit={loginFunc}
                 >
-                    <div className="flex items-left flex-col mb-5 mt-8 ">
+                    <div className="flex items-left flex-col mb-5 mx-8 gap-2">
                         <label htmlFor="username"  className="text-3xl">Username</label>
                         <input id="username" name="username" type="text" required 
                         className="block p-1 rounded-md" onChange={handleChange}/>
