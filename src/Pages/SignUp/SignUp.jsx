@@ -1,15 +1,17 @@
-import React, {useState, useEffect, useContext, useRef} from "react";
+import React, {useState, useRef} from "react";
 import axios from "axios";
 import { CurrentUserContext } from "../../App";
 import { Navigate, Link } from "react-router-dom";
 import "./signup.css"
 import PasswordValidator from "../../Components/PasswordValidator/PasswordValidator";
 
+
 export const SingUp = () =>{
       
     const [userInfo, setUserInfo] = useState({"username": "", "password": ""})
     const [errorMsg, setErrorMsg] = useState(null)
     const [navigateToHome, setNavigateToHome] = useState(false)
+    const singupBtn = useRef(null)
 
      // Selecting a file
      const selectImgBtn = useRef(null)
@@ -26,7 +28,8 @@ export const SingUp = () =>{
     const singUpFunc = (e) =>{
         e.preventDefault() 
         if(passwordErr){
-            console.log("passed")
+            singupBtn.current.style.cursor = "not-allowed"
+            singupBtn.current.disabled = true
             const userData = {
                 ...userInfo,
                 "image": image
@@ -41,11 +44,14 @@ export const SingUp = () =>{
             })
             .then(res => {
                 // Navigate to main
+                loginBtn.current.style.cursor = "pointer"
+                loginBtn.current.disabled = false
                 setNavigateToHome(true)
             })
             .catch(err => {
-                console.log(err); 
-                setErrorMsg(err.response["data"])
+                loginBtn.current.style.cursor = "pointer"
+                loginBtn.current.disabled = false 
+                err.response ? setErrorMsg(err.response["data"]) : setErrorMsg(err.message)
                 setTimeout(() => {
                     setErrorMsg((prev) => null)
                 }, 2000);
@@ -129,7 +135,7 @@ export const SingUp = () =>{
                         <Link to={"/login"} className="inline-block text-orange-500 ml-2 
                         underline-offset-1 text-xl">Log in</Link>
                     </div>
-                    <button type="submit" className="mx-8 text-2xl bg-gray-200 mb-3 rounded-md">
+                    <button type="submit" className="mx-8 text-2xl bg-gray-200 mb-3 rounded-md" ref={singupBtn}>
                         Sign Up
                     </button>
                 </form>

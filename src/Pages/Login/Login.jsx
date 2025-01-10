@@ -18,7 +18,8 @@ export const Login = () =>{
 
     const loginFunc = (e) =>{
         e.preventDefault()
-        loginBtn.current.style.cursor = "progress"
+        
+        loginBtn.current.style.cursor = "not-allowed"
         loginBtn.current.disabled = true
         axios.post(`${process.env.REACT_APP_API_URL}/login/password`, userInfo, {
             withCredentials: true, // Send credentials (cookies)
@@ -26,20 +27,20 @@ export const Login = () =>{
               'Content-Type': 'application/json',
             //   Authorization: `Bearer ${sessionToken}`, 
             // Include the session token in the Authorization header
+            
             },
+            
         })
         .then((res) => {
             loginBtn.current.style.cursor = "pointer"
             loginBtn.current.disabled = false
             setCurrentUser({...res.data})
             setRedictUser(true)
-            
         })
         .catch((err) => {
             loginBtn.current.style.cursor = "pointer"
             loginBtn.current.disabled = false
-            
-            setErrorMsg(err.response["data"] || err.message)
+            err.response ? setErrorMsg(err.response["data"]) : setErrorMsg(err.message) 
             setTimeout(() => {
                 setErrorMsg((prev) => null)
             }, 3000);
