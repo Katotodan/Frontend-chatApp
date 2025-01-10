@@ -22,7 +22,7 @@ export const SearchContact = ({currentUserId, updateContact}) => {
                 'Content-Type': 'application/json',
                 //   Authorization: `Bearer ${sessionToken}`, // Include the session token in the Authorization header
                 },
-            })
+            }) 
             .then((res) => {
                 updateContact(res.data)
             })

@@ -20,7 +20,7 @@ export const SingleContact = ({element, displayMsg, currentUserId}) => {
             const hours = date.getHours();
             const minutes = date.getMinutes();
             setLastMsgTime(`${hours}:${minutes}`)
-        })
+        }) 
         .catch((err) => console.log(err))
     }, [])
     

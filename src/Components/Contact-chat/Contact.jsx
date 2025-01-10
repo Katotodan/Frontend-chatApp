@@ -3,15 +3,15 @@ import "./contact.css"
 import axios from "axios";
 import { SingleContact } from "./SingleContact";
 import { SearchContact } from "./SearchContact";
+import { socket } from "../../socket";
 
-export const ContactChat = ({setDestination , setDestinationName, currentUserId})=>{
+export const ContactChat = ({setDestination , setDestinationName, currentUserId, message})=>{
     const [contacts, setContact] = useState([])
     const menu = useRef(null)
     const menuContainer = useRef(null)
     const [isMenuIcon, setIsMenuIcon]  = useState(true)
     
-
-    useEffect( () => {
+    const getAllMessages = () =>{
         axios.get(`${process.env.REACT_APP_API_URL}/conversationList/${currentUserId}`,{
             withCredentials: true, // Send credentials (cookies)
             headers: {
@@ -23,7 +23,17 @@ export const ContactChat = ({setDestination , setDestinationName, currentUserId}
             setContact([...res.data])
         })
         .catch((err) => console.log(err))
+    }
+    useEffect( () => {
+        getAllMessages()
     }, []) 
+    // On receiveing new msg
+    useEffect(()=>{
+        if(message !== ""){
+            getAllMessages()
+        }
+    }, [message])
+
     
     const displayMenu = (e)=>{ isMenuIcon ? setIsMenuIcon(false) : setIsMenuIcon(true)}
     const displayMsg = (element) =>{
@@ -43,7 +53,7 @@ export const ContactChat = ({setDestination , setDestinationName, currentUserId}
     })
     
 
-    return(
+    return( 
         <>
         <div className="menu-displayer" onClick={displayMenu} >
                 {isMenuIcon ? <span>&#8801;</span>: <span className="text-red-600">&#10006;</span>}

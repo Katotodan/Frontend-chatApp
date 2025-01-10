@@ -44,13 +44,13 @@ export const SingUp = () =>{
             })
             .then(res => {
                 // Navigate to main
-                loginBtn.current.style.cursor = "pointer"
-                loginBtn.current.disabled = false
+                singupBtn.current.style.cursor = "pointer"
+                singupBtn.current.disabled = false
                 setNavigateToHome(true)
             })
             .catch(err => {
-                loginBtn.current.style.cursor = "pointer"
-                loginBtn.current.disabled = false 
+                singupBtn.current.style.cursor = "pointer"
+                singupBtn.current.disabled = false 
                 err.response ? setErrorMsg(err.response["data"]) : setErrorMsg(err.message)
                 setTimeout(() => {
                     setErrorMsg((prev) => null)
@@ -94,7 +94,7 @@ export const SingUp = () =>{
         <section className="min-h-screen bg-slate-300 flex items-center justify-center pb-4">
             <div className=" md:w-2/4 md:h-3/4 border-2 border-black rounded-md form-container">
                 {navigateToHome && <Navigate to="/"/>}
-                <h1 className="text-center text-5xl font-sans my-8">Sign up to SOMA</h1>
+                <h1 className="text-center text-5xl font-sans mt-8">Sign up to SOMA</h1>
                 <div className="h-6 ml-8 mb-2">
                     {errorMsg && <p className="text-red-600">{errorMsg}</p>}
                 </div>

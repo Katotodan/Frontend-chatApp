@@ -57,7 +57,7 @@ export const Home = () =>{
             <main>
                 <div className="contact--container">
                     <ContactChat setDestination = {toUser} 
-                    setDestinationName ={toUser_name} currentUserId={user.id}/>    
+                    setDestinationName ={toUser_name} currentUserId={user.id} message={newMsg}/>    
                 </div>
                 
                 <div className="message--container">
