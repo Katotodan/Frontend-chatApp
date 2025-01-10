@@ -2,7 +2,8 @@ import React, {useState, useEffect, useContext, useRef} from "react";
 import axios from "axios";
 import { CurrentUserContext } from "../../App";
 import { Navigate, Link } from "react-router-dom";
-//import "./signup.css"
+import "./signup.css"
+import PasswordValidator from "../../Components/PasswordValidator/PasswordValidator";
 
 export const SingUp = () =>{
       
@@ -15,47 +16,17 @@ export const SingUp = () =>{
      const imgContainer = useRef(null)
      const [image, setImage] = useState(null)
      const [displayImg, setDisplayImg] = useState(false)
-     const [passwordErr, setPasswordErr] = useState("")
+     const [passwordErr, setPasswordErr] = useState(false)
 
-    const checkPassword = ()=>{
-        const lowerCasePattern = /[a-z]/g
-        const upperCasePattern = /[A-Z]/g
-        const specialChar = /[!@#$%^&*(),.?":{}|<>[\]\\/'`~_-]/g
-        const digitPattern = /[0-9]/g
-        
-        if(!lowerCasePattern.test(userInfo.password)){
-            setPasswordErr("Your password should contain atleast one lowercase letter")
-            return false
-        }else if(!upperCasePattern.test(userInfo.password)){
-            setPasswordErr("Your password should contain atleast one uppercase letter")
-            return false
-        }else if(!specialChar.test(userInfo.password)){
-            setPasswordErr("Your password should contain atleast one special character")
-            return false
-        }else if(!digitPattern.test(userInfo.password)){
-            setPasswordErr("Your password should contain atleast one digit")
-            return false
-        }else if(userInfo.password.length < 8){
-            setPasswordErr("Your password should contain atleast 8 characters")
-            return false
-        }else{
-            setPasswordErr("")
-            return true
-        }
-
+    const checkPassword = (value) =>{        
+        setPasswordErr(value)
     }
-    useEffect(()=>{
-        if(userInfo.password.length >0){
-            checkPassword()
-        }else{
-            setPasswordErr("")
-        }
-        
-    }, [userInfo.password])
+    
 
     const singUpFunc = (e) =>{
         e.preventDefault() 
-        if(checkPassword()){
+        if(passwordErr){
+            console.log("passed")
             const userData = {
                 ...userInfo,
                 "image": image
@@ -79,6 +50,8 @@ export const SingUp = () =>{
                     setErrorMsg((prev) => null)
                 }, 2000);
             })
+        }else{
+            setErrorMsg("Invalid Password")
         }
     }
     const handleChange = (e) =>{
@@ -132,8 +105,8 @@ export const SingUp = () =>{
                         <input id="current-password" className="block p-1 rounded-md"
                         name="password" type="password" onChange={handleChange}
                         min={8} required value={userInfo.password} />
-                        <label htmlFor="" className="text-red-500">{passwordErr}</label>
                     </div>
+                    <PasswordValidator password={userInfo.password} correctPassword={checkPassword}/>
                     <div className="flex items-left flex-col mb-5 gap-2 mx-8 ">
                         <label className="cursor-pointer bg-slate-100 
                         rounded-md inline-block w-44 p-2">

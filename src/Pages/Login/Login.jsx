@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from "react";
+import React, {useState, useEffect, useContext, useRef} from "react";
 import axios from "axios";
 import { CurrentUserContext } from "../../App";
 import { Navigate, Link } from "react-router-dom";
@@ -14,9 +14,12 @@ export const Login = () =>{
     const [errorMsg, setErrorMsg] = useState(null)
       
     const [userInfo, setUserInfo] = useState({"username": "", "password": ""})
+    const loginBtn = useRef(null)
+
     const loginFunc = (e) =>{
         e.preventDefault()
-        console.log('Log in clicked');  
+        loginBtn.current.style.cursor = "progress"
+        loginBtn.current.disabled = true
         axios.post(`${process.env.REACT_APP_API_URL}/login/password`, userInfo, {
             withCredentials: true, // Send credentials (cookies)
             headers: {
@@ -26,13 +29,15 @@ export const Login = () =>{
             },
         })
         .then((res) => {
-            console.log(res);
-            
+            loginBtn.current.style.cursor = "pointer"
+            loginBtn.current.disabled = false
             setCurrentUser({...res.data})
             setRedictUser(true)
+            
         })
         .catch((err) => {
-            console.log(err);
+            loginBtn.current.style.cursor = "pointer"
+            loginBtn.current.disabled = false
             
             setErrorMsg(err.response["data"] || err.message)
             setTimeout(() => {
@@ -75,7 +80,7 @@ export const Login = () =>{
                         underline-offset-1 text-xl">Sign Up</Link>
                         
                     </div>
-                    <button type="submit" className="mx-8 text-2xl bg-gray-200 rounded-md">
+                    <button type="submit" className="mx-8 text-2xl bg-gray-200 rounded-md" ref={loginBtn}>
                         Log in
                     </button>
                 </form>
