@@ -41,7 +41,7 @@ export const SingleContact = ({element, displayMsg, currentUserId}) => {
         </div>
         <div className="name-msg">
             <p className="name">{chatDestinationUser.username}</p>
-            <p>{element.message}</p>
+            <p>{element["message"].length > 10 ? element["message"].substring(0, 9) + " ..." : element["message"]}</p>
         </div>
         {element["time"] && <div className="time">
             {new Date(element["time"]).getHours()  > 9 ? new Date(element["time"]).getHours() : "0" + new Date(element["time"]).getHours()}: 

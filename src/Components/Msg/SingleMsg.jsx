@@ -28,7 +28,7 @@ export const SingleMsg = ({msg, destination}) => {
     ref={msgRef}>
         <div onClick={handleMsgClick}>
             <div className="msg">
-                {msg["message"].length > 10 ? msg["message"].substring(0, 5) + "..." : msg["message"]}
+                {msg.message}
             </div>
             <div className="time">
                 {new Date(msg.time).getHours()}: {new Date(msg.time).getMinutes()}
