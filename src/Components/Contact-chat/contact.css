@@ -2,11 +2,13 @@
 .contacts-section{
     background-color: #f0f0f0 !important;
     /* position: relative; */
-    /* width: 100%; */
+    width: 100%;
     height: calc(100vh - 5rem);
     overflow-x: hidden;
     overflow-y: auto;
     z-index: 2;
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
 }
 
 .search-form-container{
@@ -60,41 +62,11 @@
 }
 
 /* Responsiveness */
-.menu-displayer{
-    display: none;
 
-}
 @media screen and (max-width: 992px)  {
     .contacts-section{
-        position: relative; 
-        width: 100%;
         padding-top: 3rem;
     }
     
-    .menu-displayer{
-        display: block;
-        font-size: 2.5rem;
-        margin-left: 0.5rem;
-        background-color: transparent;
-        cursor: pointer;
-        position: absolute;
-        top: -0.75rem;
-        left: 0.5rem;
-        z-index: 44;
-    }
-    
-    .menu{
-        display: none;
-        transition: display 0.5s ease;
-    } 
-    .nonActive{
-        display: block;
-        transition: display 0.5s ease;
-    }
 }
 
-@media screen and (max-width: 600px)  {
-    .sm-device-view{
-        width: 100vw;
-    }
-}

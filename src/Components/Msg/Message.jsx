@@ -1,13 +1,27 @@
-import React,{useState, useEffect} from "react";
+import React,{useState, useEffect, useRef} from "react";
 import "./Message.css"
 import axios from "axios";
 import { SingleMsg } from "./SingleMsg";
 import { Textarea } from "./Textarea";
 import { socket } from "../../socket";
+import { emitter } from "../../App";
 
 
 export const Msg = ({destination, destinationName, message, user}) =>{
     const [msgList, setMsgList] = useState([])
+    const msgContainer = useRef(null)
+
+    // Scroll function 
+    const scrollBottom = ()=>{
+        msgContainer.current.scroll({
+            top: msgContainer.current.scrollHeight,
+            left: 0,
+            behavior: 'smooth'
+        });
+    }
+    useEffect(()=>{
+        scrollBottom()
+    })
    
     // Get the message
     useEffect(() =>{
@@ -40,10 +54,6 @@ export const Msg = ({destination, destinationName, message, user}) =>{
 
     
     let previousDate = []
-
-    
-
-
 
     const messages = msgList.map((element, index) =>{
 
@@ -102,7 +112,9 @@ export const Msg = ({destination, destinationName, message, user}) =>{
                         "receiver": destination,
                         "time": new Date()
                     }
-                ])  
+                ]) 
+                emitter.emit('onMsgSend', [e, destination])
+                scrollBottom()
             })
             .catch(err => console.log(err))
          
@@ -111,10 +123,9 @@ export const Msg = ({destination, destinationName, message, user}) =>{
 
     return( 
         <div className="allMsg-container">
-            <div className="messages" >
+            <div className="messages" ref={msgContainer}>
                 <h2>Chat with <strong>{destinationName}</strong></h2>
                 {messages}
-                
             </div>
             <Textarea addMessage={addToMessage} destination={destination}/>
             
@@ -122,4 +133,5 @@ export const Msg = ({destination, destinationName, message, user}) =>{
         
     ) 
 }  
-// Working on textarea then make the home page responsive  
+// Working on textarea then make the home page responsive 
+// Working on scroll 

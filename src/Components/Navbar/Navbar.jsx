@@ -1,13 +1,18 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import axios from "axios"
 import "./navbar.css"
 import { Navigate } from "react-router-dom"
 import { socket } from "../../socket"
 import logo from "../../asserts/logo.png"
+import { emitter } from "../../App"
 
 export const Navbar = ({user}) =>{
     const [redirectUser, setRedirectUser] = useState(false)
     const [displayLogoutBtn, setDisplayLogoutBtn] = useState(false)
+    useEffect(()=>{
+        emitter.on("hideLogDropDown", ()=> setDisplayLogoutBtn(false))
+         
+    },[])
     const logoutFunc = (e) =>{
         e.preventDefault() 
         axios.post(`${process.env.REACT_APP_API_URL}/logout`, user
@@ -57,4 +62,4 @@ export const Navbar = ({user}) =>{
             </div>
         </nav> 
     )
-}
+} 

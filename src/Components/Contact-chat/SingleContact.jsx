@@ -1,13 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import { socket } from '../../socket'
 
 export const SingleContact = ({element, displayMsg, currentUserId}) => {
-    const [lastMsg, setLastMsg] = useState("")
     const [lastMsgTime, setLastMsgTime] = useState("")
-    const handleClick = () => {displayMsg(element)}
-    // Get last message
+    
+    const [chatDestinationUser, setChatDestinationUser] = useState({})
+
+    const chatDestination = element.sender === currentUserId ? element.receiver : element.sender
+
+    const handleClick = () => {        
+        displayMsg(chatDestinationUser)
+    }
+    
     useEffect(()=>{
-        axios.get(`${process.env.REACT_APP_API_URL}/singleContact/lastmessage/${element._id}/${currentUserId}`,{
+        axios.get(`${process.env.REACT_APP_API_URL}/chat_info/${chatDestination}`,{
             withCredentials: true, // Send credentials (cookies)
             headers: {
             'Content-Type': 'application/json',
@@ -15,30 +22,32 @@ export const SingleContact = ({element, displayMsg, currentUserId}) => {
             },
         })
         .then((res) => {
-            setLastMsg(res.data["lastMsg"])
-            const date = new Date(res.data["time"])
-            const hours = date.getHours();
-            const minutes = date.getMinutes();
-            setLastMsgTime(`${hours}:${minutes}`)
+            setChatDestinationUser({...res.data})
+            
         }) 
-        .catch((err) => console.log(err))
+        .catch((err) => {
+            console.log(err)
+            setChatDestinationUser({...element})
+        })
     }, [])
     
     // Is this user online?
   return (
     <div className="contact-chat" key={element._id} onClick = {handleClick}>
         <div className="photo">
-            {element.image ? <img src={element.image} alt="" className="img" /> :
-            <span className="img bg-slate-300">{element.username.slice(0,2).toUpperCase()}</span>
+            {chatDestinationUser.image ? <img src={chatDestinationUser.image} alt="" className="img" /> :
+            <span className="img bg-slate-300">{chatDestinationUser.username?.slice(0,2).toUpperCase()}</span>
             }
         </div>
         <div className="name-msg">
-            <p className="name">{element.username}</p>
-            <p>{lastMsg}</p>
+            <p className="name">{chatDestinationUser.username}</p>
+            <p>{element.message}</p>
         </div>
-        <div className="time">
-            {lastMsgTime}
+        {element["time"] && <div className="time">
+            {new Date(element["time"]).getHours()  > 9 ? new Date(element["time"]).getHours() : "0" + new Date(element["time"]).getHours()}: 
+            {new Date(element["time"]).getMinutes()  > 9 ? new Date(element["time"]).getMinutes() : "0" + new Date(element["time"]).getMinutes()}   
         </div>
+        }
     </div>
   )
 }

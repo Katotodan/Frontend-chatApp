@@ -6,13 +6,15 @@ import { ContactChat } from "../../Components/Contact-chat/Contact";
 import {Msg} from "../../Components/Msg/Message"
 import { socket } from "../../socket";
 import { useLoaderData } from "react-router-dom";
+import { emitter } from "../../App";
+
 
 
 export const Home = () =>{
     const user = useLoaderData(); 
 
-    const [isConnected, setIsConnected] = useState(socket.connected);
     const [newMsg, setNewMsg] = useState("")
+    const [isMenuIcon,setIsMenuIcon] = useState(true)
     
     
     useEffect(() =>{ 
@@ -20,12 +22,12 @@ export const Home = () =>{
         socket.emit("user_connect", user.id)
       
         function onDisconnect() {
-            setIsConnected(false);
             socket.emit("user_disconnect", user.id)
         }
     
         function sendSpecificMsg([senderId, message]) {
             setNewMsg([senderId, message])
+            
         }     
       
         socket.on('disconnect', onDisconnect);
@@ -45,17 +47,21 @@ export const Home = () =>{
     
     const toUser = (id) =>{
         setDestination(id) 
+        setIsMenuIcon(true)
     }
     const toUser_name = (name) =>{
         setDestinationName(name)
     }
-    
+    const displayMenu = () =>{setIsMenuIcon(!isMenuIcon)}
     
     return(        
         <div>
             <Navbar user={user}/>
-            <main>
-                <div className="contact--container">
+            <main onClick={() => {emitter.emit("hideLogDropDown")}}>
+            <div className="menu-displayer" onClick={displayMenu} >
+                    {isMenuIcon ? <span>&#8801;</span>: <span className="text-red-600">&#10006;</span>}
+            </div>
+                <div className={isMenuIcon ? "contact--container hide" : "contact--container show"}>
                     <ContactChat setDestination = {toUser} 
                     setDestinationName ={toUser_name} currentUserId={user.id} message={newMsg}/>    
                 </div>

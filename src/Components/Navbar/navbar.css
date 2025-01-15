@@ -59,14 +59,20 @@ form button{
     }
     .username{
         display: none;
-        transition: all 2s;
+        transition: all 0.5s;
+        
+    }
+    .username-responsive{
+        margin: 2rem 0;
+        width: 50vw;
+        text-align: center;
     }
     .user > form{
         display:  none;
     }
     .user-responsive > form{
         display: block;
-        
+        margin-left:auto;
     }
     .user-responsive{
         display: block;
@@ -79,12 +85,19 @@ form button{
         padding: 0 5% 1rem 1rem;
         z-index: 999999;
         gap: .5rem;
-        transition: all 2s;
+        transition: all 0.5s;
+        text-align: center;
     }
     .user-responsive > div{
         flex-direction: column-reverse;
         gap: .5rem;
-        transition: all 2s;
+        transition: all 0.5s;
+    }
+    .user-responsive .userImage, .user-responsive .userImageText{
+        position: relative;
+        left: 40%;
+
+        float: right;
     }
 }
 

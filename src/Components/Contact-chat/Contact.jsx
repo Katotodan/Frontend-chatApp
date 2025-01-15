@@ -3,13 +3,12 @@ import "./contact.css"
 import axios from "axios";
 import { SingleContact } from "./SingleContact";
 import { SearchContact } from "./SearchContact";
-import { socket } from "../../socket";
+import { emitter } from "../../App";
 
 export const ContactChat = ({setDestination , setDestinationName, currentUserId, message})=>{
     const [contacts, setContact] = useState([])
-    const menu = useRef(null)
-    const menuContainer = useRef(null)
-    const [isMenuIcon, setIsMenuIcon]  = useState(true)
+    
+    const [isMsgLoading, setIsMsgLoading] = useState(true)
     
     const getAllMessages = () =>{
         axios.get(`${process.env.REACT_APP_API_URL}/conversationList/${currentUserId}`,{
@@ -20,27 +19,34 @@ export const ContactChat = ({setDestination , setDestinationName, currentUserId,
             },
         })
         .then((res) => {
-            setContact([...res.data])
+            setContact([...res.data])            
+            setIsMsgLoading(false)
         })
-        .catch((err) => console.log(err))
+        .catch((err) => {
+            console.log(err)
+            setIsMsgLoading(false)
+        })
     }
     useEffect( () => {
         getAllMessages()
+        emitter.on("onMsgSend", () =>{
+            getAllMessages()
+            console.log("Emitter is working");
+            
+        })
     }, []) 
     // On receiveing new msg
     useEffect(()=>{
         if(message !== ""){
+            // Check if that user exist in contatact and then update the contacts array
             getAllMessages()
         }
     }, [message])
 
     
-    const displayMenu = (e)=>{ isMenuIcon ? setIsMenuIcon(false) : setIsMenuIcon(true)}
     const displayMsg = (element) =>{
         setDestination(element._id)
         setDestinationName(element.username)
-        // Removing the menu in table view point
-        displayMenu()
         
     }
     const updateContact =(e)=>{
@@ -55,16 +61,15 @@ export const ContactChat = ({setDestination , setDestinationName, currentUserId,
 
     return( 
         <>
-        <div className="menu-displayer" onClick={displayMenu} >
-                {isMenuIcon ? <span>&#8801;</span>: <span className="text-red-600">&#10006;</span>}
-        </div>
-        <div className={ isMenuIcon ? "contacts-section " : "contacts-section sm-device-view"} ref={menuContainer}>
-            
-            <div className={isMenuIcon ? "menu active" : "menu nonActive"} ref={menu}>
+        
+        <div className="contacts-section">
+            <div >
                 <SearchContact updateContact = {updateContact} currentUserId= {currentUserId} />
                 <div className="contact_container">
                     {contact.length > 0 ? <>{contact}</>:<>
-                        <span className="no-conversation">There were no conversations found!</span> 
+                    {isMsgLoading ? <span className="no-conversation">
+                        Loading ....</span> : 
+                        <span className="no-conversation">There were no conversations found!</span>}
                     </>} 
                       
                 </div>

@@ -24,7 +24,7 @@ export const SingUp = () =>{
         setPasswordErr(value)
     }
     
-
+ 
     const singUpFunc = (e) =>{
         e.preventDefault() 
         if(passwordErr){
@@ -70,7 +70,6 @@ export const SingUp = () =>{
     // Selecting a file
     
     const addingImg = async (e) =>{
-        console.log(e.target);
         const file = selectImgBtn.current.files[0]
         if(file){
             const reader = new FileReader();

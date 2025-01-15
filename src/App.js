@@ -7,6 +7,9 @@ import { SingUp } from './Pages/SignUp/SignUp';
 import { Login } from './Pages/Login/Login';
 import { Home } from "./Pages/Protected/Home";
 import { loaderFunction, loaderFunctionOnLogin } from "./loader";
+import mitt from 'mitt'
+
+export const emitter = mitt()
 
 const router = createBrowserRouter([
   {
