@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useContext, useRef} from "react";
 import axios from "axios";
+axios.defaults.withCredentials = true;
 import { CurrentUserContext } from "../../App";
 import { Navigate, Link } from "react-router-dom";
 import "./login.css"

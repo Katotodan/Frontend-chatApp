@@ -1,4 +1,5 @@
 import axios from 'axios'
+axios.defaults.withCredentials = true;
 import React, {useState, useRef} from 'react'
 
 export const SingleMsg = ({msg, destination}) => {

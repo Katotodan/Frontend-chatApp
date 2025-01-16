@@ -1,6 +1,7 @@
 import React, {useEffect, useState, useRef} from "react";
 import "./contact.css"
 import axios from "axios";
+axios.defaults.withCredentials = true;
 import { SingleContact } from "./SingleContact";
 import { SearchContact } from "./SearchContact";
 import { emitter } from "../../App";

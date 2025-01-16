@@ -1,5 +1,6 @@
 import axios from "axios"
 import { redirect } from 'react-router-dom';
+axios.defaults.withCredentials = true;
 
 export const loaderFunction = () =>{
     //send request to '/',

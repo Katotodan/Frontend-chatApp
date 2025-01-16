@@ -1,6 +1,6 @@
 import React,{useEffect,useState, useRef} from 'react'
 import axios from 'axios'
-
+axios.defaults.withCredentials = true;
 export const SearchContact = ({currentUserId, updateContact}) => {
     const [searchUserValue, setSearchUserValue] = useState("")
     const isInitialRender = useRef(true)
