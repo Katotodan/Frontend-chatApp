@@ -1,11 +1,13 @@
 import React, {useEffect, useState, useRef} from "react";
 import "./contact.css"
 import axios from "axios";
-axios.defaults.withCredentials = true;
+
 import { SingleContact } from "./SingleContact";
 import { SearchContact } from "./SearchContact";
 import { emitter } from "../../App";
 
+
+axios.defaults.withCredentials = true;
 export const ContactChat = ({setDestination , setDestinationName, currentUserId, message})=>{
     const [contacts, setContact] = useState([])
     

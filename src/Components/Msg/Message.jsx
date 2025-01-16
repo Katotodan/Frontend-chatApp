@@ -1,13 +1,13 @@
 import React,{useState, useEffect, useRef} from "react";
 import "./Message.css"
 import axios from "axios";
-axios.defaults.withCredentials = true;
+
 import { SingleMsg } from "./SingleMsg";
 import { Textarea } from "./Textarea";
 import { socket } from "../../socket";
 import { emitter } from "../../App";
 
-
+axios.defaults.withCredentials = true;
 export const Msg = ({destination, destinationName, message, user}) =>{
     const [msgList, setMsgList] = useState([])
     const msgContainer = useRef(null)

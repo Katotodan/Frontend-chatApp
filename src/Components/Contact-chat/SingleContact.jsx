@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 axios.defaults.withCredentials = true;
-import { socket } from '../../socket'
 
 export const SingleContact = ({element, displayMsg, currentUserId}) => {
     const [lastMsgTime, setLastMsgTime] = useState("")

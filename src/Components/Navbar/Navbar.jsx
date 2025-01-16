@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react"
 import axios from "axios"
-axios.defaults.withCredentials = true;
 import "./navbar.css"
 import { Navigate } from "react-router-dom"
 import { socket } from "../../socket"
 import logo from "../../asserts/logo.png"
 import { emitter } from "../../App"
 
+axios.defaults.withCredentials = true;
 export const Navbar = ({user}) =>{
     const [redirectUser, setRedirectUser] = useState(false)
     const [displayLogoutBtn, setDisplayLogoutBtn] = useState(false)

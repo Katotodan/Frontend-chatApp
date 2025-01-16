@@ -1,11 +1,10 @@
 import React, {useState, useRef} from "react";
 import axios from "axios";
-axios.defaults.withCredentials = true;
-import { CurrentUserContext } from "../../App";
 import { Navigate, Link } from "react-router-dom";
 import "./signup.css"
 import PasswordValidator from "../../Components/PasswordValidator/PasswordValidator";
 
+axios.defaults.withCredentials = true;
 
 export const SingUp = () =>{
       
@@ -120,7 +119,8 @@ export const SingUp = () =>{
                             <input type="file" id="imageInput" onChange={addingImg} 
                             ref={selectImgBtn} accept="image/*" className="hidden"/>
                         </label>
-                        <img id="imageContainer" ref={imgContainer} className="max-h-96 object-cover"></img>
+                        <img id="imageContainer" ref={imgContainer} 
+                        className="max-h-96 object-cover" alt="Your image"></img>
                     </div>
                     {displayImg && <>
                         <button type="button" className="inline-block w-auto bg-gray-200 

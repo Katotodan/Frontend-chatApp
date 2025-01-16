@@ -1,7 +1,7 @@
 import axios from 'axios'
-axios.defaults.withCredentials = true;
 import React, {useState, useRef} from 'react'
 
+axios.defaults.withCredentials = true;
 export const SingleMsg = ({msg, destination}) => {
     const [displayDeletebtn, setDisplayDeletebtn] = useState(false)
     const msgRef = useRef(null)
